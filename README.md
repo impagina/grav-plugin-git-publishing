@@ -54,6 +54,28 @@ Note that if you use the admin plugin, a file with your configuration, and named
 
 **Did you incorporate third-party code? Want to thank somebody?**
 
+## Development Notes
+
+- [Grav Page Inject Plugin](https://github.com/getgrav/grav-plugin-page-inject)
+  - Inject entire pages or page content into other pages using simple markdown syntax
+  - Generally, very similar to what we want to achieve. Maybe, even, the solution to our problem.
+  - Shows how to enable the plugin only on specific pages.
+
+### Things to be explored
+
+- Show each page of the book with its own (sub) url.
+- Convert the links to `.md` file to a valid Grav link / How to manage the book's internal links.
+  - The links should be clickable in the Github web interface.
+- Rewrite the image links (if needed).
+  - The images should correct render in the Github web interface.
+- Add comments to each page
+  - Without any non-free comments engine.
+  - <https://github.com/sommerregen/grav-plugin-jscomments> ?
+  - <https://github.com/getgrav/grav-plugin-comments>
+- Cache the html files.
+    - Refresh the cache on git pull.
+    - The webhook can trigger a grav command, if needed.
+
 ## To Do
 
 - [ ] Future plans, if any
