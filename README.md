@@ -4,11 +4,6 @@ This README is incomplete. The plugin is in its early conceptual stage.
 
 _Git Publishing_ is a [Grav CMS](http://github.com/getgrav/grav) Plugin for rendering books and manuals stored in Git repositores.
 
-We will probably need to change the name of this plugin, because of <https://gitbook.com>
-
-- git-publish ?
-- git-publishing ?
-
 ## Overview
 
 ## Installation
