@@ -1,8 +1,8 @@
-# Git Book Plugin
+# Git Publishing Plugin
 
 This README is incomplete. The plugin is in its early conceptual stage.
 
-_Git Book_ is a [Grav CMS](http://github.com/getgrav/grav) Plugin for rendering books stored in Git repositores.
+_Git Publishing_ is a [Grav CMS](http://github.com/getgrav/grav) Plugin for rendering books and manuals stored in Git repositores.
 
 We will probably need to change the name of this plugin, because of <https://gitbook.com>
 
@@ -19,17 +19,17 @@ Installing the Git Book plugin can be done in one of two ways. The GPM (Grav Pac
 
 The simplest way to install this plugin is via the [Grav Package Manager (GPM)](http://learn.getgrav.org/advanced/grav-gpm) through your system's terminal (also called the command line).  From the root of your Grav install type:
 
-    bin/gpm install git-book
+    bin/gpm install git-publishing
 
-This will install the Git Book plugin into your `/user/plugins` directory within Grav. Its files can be found under `/your/site/grav/user/plugins/git-book`.
+This will install the Git Book plugin into your `/user/plugins` directory within Grav. Its files can be found under `/your/site/grav/user/plugins/git-publishing`.
 
 ### Manual Installation
 
-To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `git-book`. You can find these files on [GitHub](https://github.com/aoloe/grav-plugin-git-book) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
+To install this plugin, just download the zip version of this repository and unzip it under `/your/site/grav/user/plugins`. Then, rename the folder to `git-publishing`. You can find these files on [GitHub](https://github.com/aoloe/grav-plugin-git-publishing) or via [GetGrav.org](http://getgrav.org/downloads/plugins#extras).
 
 You should now have all the plugin files under
 
-    /your/site/grav/user/plugins/git-book
+    /your/site/grav/user/plugins/git-publishing
 	
 > NOTE: This plugin is a modular component for Grav which requires [Grav](http://github.com/getgrav/grav) and the [Error](https://github.com/getgrav/grav-plugin-error) and [Problems](https://github.com/getgrav/grav-plugin-problems) to operate.
 
@@ -39,7 +39,7 @@ If you use the admin plugin, you can install directly through the admin plugin b
 
 ## Configuration
 
-Before configuring this plugin, you should copy the `user/plugins/git-book/git-book.yaml` to `user/config/plugins/git-book.yaml` and only edit that copy.
+Before configuring this plugin, you should copy the `user/plugins/git-publishing/git-publishing.yaml` to `user/config/plugins/git-publishing.yaml` and only edit that copy.
 
 Here is the default configuration and an explanation of available options:
 
@@ -47,7 +47,7 @@ Here is the default configuration and an explanation of available options:
 enabled: true
 ```
 
-Note that if you use the admin plugin, a file with your configuration, and named git-book.yaml will be saved in the `user/config/plugins/` folder once the configuration is saved in the admin.
+Note that if you use the admin plugin, a file with your configuration, and named git-publishing.yaml will be saved in the `user/config/plugins/` folder once the configuration is saved in the admin.
 
 ## Usage
 
