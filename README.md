@@ -46,7 +46,52 @@ Note that if you use the admin plugin, a file with your configuration, and named
 
 ## Usage
 
-**Describe how to use the plugin.**
+### Activating
+
+By default, the _Git Publishing_ pluging is not active. You normally will activate on a per page or module basis:
+
+```yaml
+---
+git-publishing:
+    active: true
+---
+```
+
+### Reading the book settings
+
+The page's headers needs to contain the address of the project file:
+
+```yaml
+---
+git-publishing:
+    active: true
+    project: book/project-grav.yaml
+---
+```
+
+### Defining the book settings
+
+The book needs a yaml file defining:
+
+- `content_dir`: the place where the content is stored.
+- `toc`: the markdown file containing the table of contents.
+- `title`: the title of the book.
+- `chapters`: the list of the chapters (the file name without the language code and the markdown extension).
+
+Optionally, it can define:
+
+- the available languages
+
+### Picking the languages
+
+- The project settings define the default (or only language) of the book.
+- The page can define the current language (is multiple ones are available).
+- The project settings can define alternate languages that can be used if the requested file is not available in the current language.
+- Each language is a Grav page.
+
+### Config defaults
+
+If you want to change the default values, copy the `git-publishing.yaml` file into your users/config/plugins/ folder (create it if it doesn't exist), and then modify thethere. This will override the default settings.
 
 ## Features
 
@@ -60,6 +105,34 @@ Note that if you use the admin plugin, a file with your configuration, and named
   - Inject entire pages or page content into other pages using simple markdown syntax
   - Generally, very similar to what we want to achieve. Maybe, even, the solution to our problem.
   - Shows how to enable the plugin only on specific pages.
+
+## Development Log
+
+- Create the plugin
+- Inspired by [Grav Page Inject Plugin](https://github.com/getgrav/grav-plugin-page-inject), activate the plugin on a single page (`mergeConfig() + get()`)
+- Inspired by [Grav Directory Listing Plugin](https://github.com/OleVik/grav-plugin-directorylisting), get the current path of the page
+- Inspired by [Grav Import Plugin](https://github.com/Deester4x4jr/grav-plugin-import), read the yaml project file.
+- Changed to use the Grav's own yaml reading API: https://learn.getgrav.org/api#class-grav-common-file-compiledyamlfile
+- According to [Error Display](https://learn.getgrav.org/advanced/debugging#error-display), errors are triggered as exceptions.
+- Append the markdown content of the book's file to the page's content: Using `system/src/Grav/Common/Markdown/Parsedown.php` could allow a few more Grav specific Markdown features to be enabled. But we probably do not need them for now and can directly extend Parsedown.
+- Inject a base dir for images
+- Convert the internal links to links that work in Grav
+- I'm stuck at catching the 404 before it is "calculated" and (if i'm on a page with the plugin, change the uri).
+ - according to a tip in discord, i have to look at the login plugin
+ - i did look at it (`storeReferrerPage()`), but it would not work: it sets the current url in the session and redirects: which changes the url in the address bar.
+- what about the [regex based route aliases](https://learn.getgrav.org/content/routing#regex-based-aliases)?
+  - you have to set it in `user/config/site.yaml`
+  -
+
+   ```yaml
+     routes:
+       '/learn/starting-with-scribus/(.*)': '/learn/starting-with-scribus/'
+   ```
+  - it does work but, can we do better?
+    - setting the route dynamically from the plugin?
+- For the images, I need the relative path to the markdown file "defining" the book. I can get the `$page->media()->path()`, but that's an absolute path.
+- For the links, I need the latest item in the route.
+- Now, the markdown files are correctly rendered, but the code is still of bad quality.
 
 ### Things to be explored
 
@@ -78,4 +151,7 @@ Note that if you use the admin plugin, a file with your configuration, and named
 
 ## To Do
 
-- [ ] Future plans, if any
+- [ ] Correctly define the `project-grav.yaml` file
+  - [ ] What if there is only one language? (no `-en`).
+  - [ ] How to join multiple files in one chaptger.
+  - [ ] Render the content of the `.md` file only if no chapter is selected.
