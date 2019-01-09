@@ -87,14 +87,15 @@ class GitPublishingPlugin extends Plugin
         }
 
         $projectConfig = CompiledYamlFile::instance($projectFilename)->content();
+        // echo("<pre>".print_r($projectConfig, 1)."</pre>");
 
         $language = $config->get('language');
         if (!$language) {
             $language = $projectConfig['language'][0];
         }
 
-        $bookPage = substr($this->grav['uri']->route(), strlen($route));
-        if (!in_array($bookPage, $projectConfig)) {
+        $bookPage = trim(substr($this->grav['uri']->route(), strlen($route)), '/');
+        if (!in_array($bookPage, $projectConfig['chapters'])) {
             // TODO: or rather trigger a 404?
             $bookPage = $projectConfig['toc'];
         }
