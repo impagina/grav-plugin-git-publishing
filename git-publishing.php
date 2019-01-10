@@ -89,10 +89,7 @@ class GitPublishingPlugin extends Plugin
         $projectConfig = CompiledYamlFile::instance($projectFilename)->content();
         // echo("<pre>".print_r($projectConfig, 1)."</pre>");
 
-        $language = $config->get('language');
-        if (!$language) {
-            $language = $projectConfig['language'][0];
-        }
+        $language = $this->getLanguage($projectConfig, $config);
 
         $bookPage = trim(substr($this->grav['uri']->route(), strlen($route)), '/');
         if (!in_array($bookPage, $projectConfig['chapters'])) {
@@ -133,5 +130,22 @@ class GitPublishingPlugin extends Plugin
         }
 
         $event['page']->setRawContent($pageContent . "\n\n" . $contentHeader. $markdown->text($content));
+    }
+
+    private function getLanguage($projectConfig, $pageConfig)
+    {
+        // TODO: initialize with the current grav language
+        $language = '';
+        $language = $pageConfig->get('language');
+        if ($language !== '') {
+            // TODO: trigger an error if the language is not in the list or if there is no list
+            if (!in_array($language, $projectConfig['languages'])) {
+                $language = '';
+            }
+        }
+        if ($language === '') {
+            $language = $projectConfig['languages'][0];
+        }
+        return $language;
     }
 }
