@@ -1,4 +1,2 @@
 enabled: true
 active: false
-routes:
-  '/learn/starting-with-scribus/(.*)': '/learn/starting-with-scribus/'
