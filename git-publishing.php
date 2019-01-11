@@ -39,7 +39,8 @@ class GitPublishingPlugin extends Plugin
 
         // Enable the main event we are interested in
         $this->enable([
-            'onPageContentRaw' => ['onPageContentRaw', 0]
+            'onPageContentRaw' => ['onPageContentRaw', 0],
+            'onPageNotFound' => ['onPageNotFound', 1000]
         ]);
     }
 
@@ -50,14 +51,22 @@ class GitPublishingPlugin extends Plugin
     }
     */
 
-    /*
     public function onPageNotFound(Event $event)
     {
-        $route = $this->grav['uri']->route();
-        // $this->grav->redirect(dirname($route));
-        $event->stopPropagation();
+        $catchingRoutes = $this->config->get('plugins.git-publishing.routes');
+        $route = $this->grav['uri']->path();
+        $url = Null;
+        foreach ($catchingRoutes as $catchingRoute) {
+            if ($route != $catchingRoute && $catchingRoute == substr($route, 0, strlen($catchingRoute))) {
+                $url = $catchingRoute;
+                break;
+            }
+        }
+        if ($url) {
+            $event->page = $this->grav['pages']->dispatch($url);
+            $event->stopPropagation();
+        }
     }
-    */
 
     /**
      * @param Event $event
@@ -106,6 +115,7 @@ class GitPublishingPlugin extends Plugin
         if ($bookPage !== '') {
             $chapterFile = sprintf('%s-%s.md', $bookPage, $language);
             // TODO: check what's the right link is... it works ok this way, but it feels wrong
+            // TODO: use the translations file
             $contentHeader .= "[Table of Contents](.)\n";
         } else {
             $chapterFile = sprintf('%s-%s.md', $projectConfig['toc'], $language);
