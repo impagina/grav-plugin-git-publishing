@@ -84,7 +84,7 @@ Optionally, it can define:
 
 ### Picking the languages
 
-- The project settings define the default (or only language) of the book.
+- The project settings define the available languages for the book.
 - The page can define the current language (is multiple ones are available).
 - The project settings can define alternate languages that can be used if the requested file is not available in the current language.
 - Each language is a Grav page.
@@ -133,6 +133,13 @@ If you want to change the default values, copy the `git-publishing.yaml` file in
 - For the images, I need the relative path to the markdown file "defining" the book. I can get the `$page->media()->path()`, but that's an absolute path.
 - For the links, I need the latest item in the route.
 - Now, the markdown files are correctly rendered, but the code is still of bad quality.
+- Run `composer install` to get the development code for Grav and be able to write and run my own tests.
+- Follow `tests/unit/Grav/Common/Markdown/ParsedownTest.php` and create a sample test script that can be run in a similar way as `composer test tests/unit/Grav/Common/Markdown/ParsedownTest::testAttributeLinks`
+- it is possible to add the routes in `config/plugins/git-publishing.yaml` and then query them with `$this->config->get('plugins.git-publishing.routes')`.
+
+
+further steps:
+- ricardo says that i can add templates from the plugins "but i'll need a method to add the template"
 
 ### Things to be explored
 
@@ -151,7 +158,22 @@ If you want to change the default values, copy the `git-publishing.yaml` file in
 
 ## To Do
 
-- [ ] Correctly define the `project-grav.yaml` file
-  - [ ] What if there is only one language? (no `-en`).
-  - [ ] How to join multiple files in one chaptger.
-  - [ ] Render the content of the `.md` file only if no chapter is selected.
+The plugin:
+
+- [ ] Render the content of the `default.md` file only if no chapter is selected.
+- [ ] Make it possible to setup the page through the admin interface
+- [ ] Allow setting the first level of title (h1, h2, ...)
+      - needed for the aggregation of files?
+- [ ] Make the "Table of contents" link translatable.
+- [ ] Add the next / previous chapter links (top and bottom).
+- [ ] For each page add a link to Github for editing or filling a ticket.
+- [ ] Add comments
+  - Integrate also the Github issues? (read only with link)
+- [ ] How to do some unit testing?
+      - From the command line?
+
+The project file:
+
+- [ ] What if there is only one language? (no `-en` in the source files).
+- [ ] How to join multiple files in one chaptger.
+- [ ] For each file / chapter, allow to set it as "outdated" (with link to the languages that are up to date).

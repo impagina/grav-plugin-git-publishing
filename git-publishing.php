@@ -54,7 +54,7 @@ class GitPublishingPlugin extends Plugin
     public function onPageNotFound(Event $event)
     {
         $catchingRoutes = $this->config->get('plugins.git-publishing.routes');
-        $route = $this->grav['uri']->path();
+        $route = rtrim($this->grav['uri']->path(), '/');
         $url = Null;
         foreach ($catchingRoutes as $catchingRoute) {
             if ($route != $catchingRoute && $catchingRoute == substr($route, 0, strlen($catchingRoute))) {
