@@ -55,7 +55,7 @@ class GitPublishingPlugin extends Plugin
     {
         $catchingRoutes = $this->config->get('plugins.git-publishing.routes');
         $route = rtrim($this->grav['uri']->path(), '/');
-        $url = Null;
+        $url = null;
         foreach ($catchingRoutes as $catchingRoute) {
             if ($route != $catchingRoute && $catchingRoute == substr($route, 0, strlen($catchingRoute))) {
                 $url = $catchingRoute;
