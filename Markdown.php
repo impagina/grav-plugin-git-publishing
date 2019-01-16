@@ -1,8 +1,5 @@
 <?php
 
-use Parsedown;
-use ParsedownExtra;
-
 namespace GitPublishing;
 
 class Markdown extends \ParsedownExtra
