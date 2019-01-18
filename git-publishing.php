@@ -44,27 +44,20 @@ class GitPublishingPlugin extends Plugin
         ]);
     }
 
-    /*
-    public function onPageInitialized(Event $event)
-    {
-        // echo("<pre>".print_r($event, 1)."</pre>");
-    }
-    */
-
     public function onPageNotFound(Event $event)
     {
-        $catchingRoutes = $this->config->get('plugins.git-publishing.routes');
-        $route = rtrim($this->grav['uri']->path(), '/');
-        $url = null;
-        foreach ($catchingRoutes as $catchingRoute) {
-            if ($route != $catchingRoute && $catchingRoute == substr($route, 0, strlen($catchingRoute))) {
-                $url = $catchingRoute;
-                break;
+        $route = rtrim(dirname($this->grav['uri']->path()), '/');
+        // TODO: we might want to check for multiple levels upwards
+        // (the number of level being optionally set in the plugin's config)
+        $parent_page = $this->grav['pages']->dispatch($route);
+        if ($parent_page) {
+            $header = $parent_page->header();
+            if (property_exists($header, 'git-publishing')) {
+                if (array_key_exists('active', $header->{'git-publishing'}) && $header->{'git-publishing'}['active']) {
+                    $event->page = $parent_page;
+                    $event->stopPropagation();
+                }
             }
-        }
-        if ($url) {
-            $event->page = $this->grav['pages']->dispatch($url);
-            $event->stopPropagation();
         }
     }
 
