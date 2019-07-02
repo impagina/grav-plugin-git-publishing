@@ -34,9 +34,13 @@ class Markdown extends \ParsedownExtra
         // echo("<pre>".print_r($link, 1)."</pre>");
         $elementHref = $link['element']['attributes']['href'];
         // $fileInfo = pathinfo($elementHref, PATHINFO_EXTENSION);
+        if (preg_match('/^[\/|http:\/\/|https:\/\/]/', $elementHref) === 0) {
+            return $link;
+        }
+
         $fileInfo = pathinfo($elementHref);
         // echo("<pre>".print_r($fileInfo, 1)."</pre>");
-        if ($fileInfo['extension'] == 'md') {
+        if (array_key_exists('extension', $fileInfo) && $fileInfo['extension'] == 'md') {
             // TODO: remove the language ext if any
             $link['element']['attributes']['href'] = $this->linkBasePath.'/'.$fileInfo['filename'];
             if ($this->hasLanguageSuffix) {
